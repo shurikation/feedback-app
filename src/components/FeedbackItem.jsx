@@ -1,23 +1,17 @@
-import { useState } from 'react';
+import PropTypes from 'prop-types'
+import Card from './shared/Card';
 
-function FeedbackItem() {
-  const [rating, setRating] = useState(10);
-  const [text, setText] = useState('Feedback example');
-
-  const handleClick = () => {
-    //state in react is immutable - i can't be directly changed
-    setRating((prev) => {
-      return prev + 1;
-    });
-  };
-
+function FeedbackItem({ item }) {
   return (
-    <div className='card'>
-      <div className="num-display">{rating}</div>
-      <div className="text-display">{text}</div>
-      <button onClick={handleClick}>Click</button>
-    </div>
+    <Card reverse={true}>
+      <div className="num-display">{item.rating}</div>
+      <div className="text-display">{item.text}</div>
+    </Card>
   )
 }
 
 export default FeedbackItem;
+
+FeedbackItem.propTypes = {
+  item: PropTypes.object.isRequired
+}
