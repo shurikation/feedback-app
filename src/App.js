@@ -44,7 +44,9 @@ function App() {
           }>
           </Route>
           <Route path='/about' element={<AboutPage />} />
-          <Route path='/post/:id/:name' element={<Post />} />
+
+           {/* 1. How to show something on specific route: */}
+          <Route path='/post/*' element={<Post />} />
         </Routes>
         <AboutIconLink />
       </div>
