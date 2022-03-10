@@ -1,4 +1,6 @@
 import { createContext, useState } from 'react';
+import { v4 as uuidv4 } from 'uuid';
+
 
 //This is a provider
 const FeedbackContext = createContext()
@@ -12,9 +14,24 @@ export const FeedbackProvider = ({ children }) => {
     }
   ]);
 
+  const deleteFeedback = (id) => {
+    if (window.confirm('Are you sure?')) {
+      setFeedback(feedback.filter((item) => item.id !== id))
+    }
+  }
+
+
+  const addFeedback = (newFeedback) => {
+    //uuidv4 helps generate uniq id for feedback:
+    newFeedback.id = uuidv4();
+    setFeedback([newFeedback, ...feedback]);
+  }
+
   return (
     <FeedbackContext.Provider value={{
-      feedback: feedback,
+      feedback,
+      deleteFeedback,
+      addFeedback
     }}>
       {children}
     </FeedbackContext.Provider>
