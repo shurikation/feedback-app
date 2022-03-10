@@ -22,7 +22,7 @@ function FeedbackForm({ handleAdd }) {
       }
 
     setText(e.target.value);
-  }
+  } 
 
   const handleSubmit = (e) => {
     e.preventDefault();

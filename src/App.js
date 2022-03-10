@@ -11,6 +11,7 @@ import FeedbackForm from './components/FeedbackForm';
 import AboutPage from './pages/AboutPage';
 import AboutIconLink from './components/AboutIconLink';
 import Post from './components/Post';
+import { FeedbackProvider } from './context/FeedbackContext';
 
 function App() {
   const [feedback, setFeedback] = useState(FeedbackData);
@@ -28,29 +29,31 @@ function App() {
   }
 
   return (
-    <Router>
-      <Header />
-      <div className='container'>
-        <Routes>
-          <Route exact path='/' element={
-            <>
-              <FeedbackForm handleAdd={addFeedback} />
-              <FeedbackStats feedback={feedback} />
-              <FeedbackList
-                feedback={feedback}
-                handleDelete={deleteFeedback}
-              />
-            </>
-          }>
-          </Route>
-          <Route path='/about' element={<AboutPage />} />
+    <FeedbackProvider>
+      <Router>
+        <Header />
+        <div className='container'>
+          <Routes>
+            <Route exact path='/' element={
+              <>
+                <FeedbackForm handleAdd={addFeedback} />
+                <FeedbackStats feedback={feedback} />
+                <FeedbackList
+                  feedback={feedback}
+                  handleDelete={deleteFeedback}
+                />
+              </>
+            }>
+            </Route>
+            <Route path='/about' element={<AboutPage />} />
 
-           {/* 1. How to show something on specific route: */}
-          <Route path='/post/*' element={<Post />} />
-        </Routes>
-        <AboutIconLink />
-      </div>
-    </Router>
+            {/* 1. How to show something on specific route: */}
+            <Route path='/post/*' element={<Post />} />
+          </Routes>
+          <AboutIconLink />
+        </div>
+      </Router>
+    </FeedbackProvider>
   )
 }
 
