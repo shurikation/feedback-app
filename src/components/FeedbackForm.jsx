@@ -1,12 +1,25 @@
-import { useState } from 'react/cjs/react.production.min'
+import { useState } from 'react'
 import Card from './shared/Card'
 import Button from './shared/Button';
 
 function FeedbackForm() {
   const [text, setText] = useState('');
+  const [btnDisabled, setBtnDisabled] = useState(true);
+  const [message, setMessage] = useState('');
 
   const handleTextChange = (e) => {
-    setText(e.target.value)
+      if(text === '') {
+        setBtnDisabled(true);
+        setMessage(null)
+      } else if(text !== '' && text.trim().length <= 10) {
+        setBtnDisabled(true);
+        setMessage('Text must be at least 10 chars!')
+      } else {
+        setBtnDisabled(false);
+        setMessage(null);
+      }
+
+    setText(e.target.value);
   }
 
   return (
@@ -17,10 +30,12 @@ function FeedbackForm() {
         <div className="input-group">
           <input 
             type="text" placeholder='Write a review'
-            onChange={handleTextChange}
+            onChange={(e) => handleTextChange(e)}
             value={text}/>
-          <Button type="submit">Send</Button>
+          <Button type="submit" isDisabled={btnDisabled}>Send</Button>
         </div>
+
+        { message && <div className='message'>{message}</div>}
       </form>
     </Card>
   )
